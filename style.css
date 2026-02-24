@@ -10,33 +10,57 @@ body{
 min-height:100vh;
 
 display:flex;
+
 justify-content:center;
 align-items:center;
 
-overflow:hidden;
+overflow-y:auto;
+overflow-x:hidden;
+
+padding:20px;
 
 }
 
-/* FUNDO COM SLIDESHOW */
 
 .background{
 
 position:fixed;
 
-width:100%;
-height:100%;
-
 top:0;
 left:0;
+
+width:100%;
+height:100%;
 
 background-size:cover;
 background-position:center;
 
-z-index:-2;
-
-transition:1s;
+z-index:-1;
 
 }
+
+
+.container{
+
+margin:auto;
+
+background:rgba(255,255,255,0.95);
+
+backdrop-filter: blur(10px);
+
+width:100%;
+max-width:420px;
+
+padding:35px 25px;
+
+border-radius:18px;
+
+text-align:center;
+
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
+
+}
+
 
 /* camada escura para contraste */
 
