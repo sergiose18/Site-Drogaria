@@ -24,6 +24,8 @@ index = 0;
 
 }
 
-trocarImagem();
+// REMOVA ISTO:
 
-setInterval(trocarImagem, 4000);
+//const imagens = [...]
+//trocarImagem()
+//setInterval(...)
