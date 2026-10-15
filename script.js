@@ -1,8 +1,8 @@
 const imagens = [
 
-"bg1.jpg",
-"bg2.jpg",
-"bg3.jpg"
+"loja1.jpg",
+"loja2.jpg",
+"loja3.jpg"
 
 ];
 

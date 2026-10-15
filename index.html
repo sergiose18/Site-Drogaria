@@ -1,97 +1,895 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
+  <meta charset="UTF-8">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Drogaria Menor Preço | Barreiras</title>
+  <meta name="description" content="Drogaria Menor Preço - Saúde e economia andam juntas. Fale com nossas lojas pelo WhatsApp.">
 
-<link rel="icon" href="favicon.ico">
+  <title>Drogaria Menor Preço</title>
 
-<link rel="stylesheet" href="style.css">
+  <style>
 
-<meta property="og:title" content="Drogaria Menor Preço | Barreiras">
-<meta property="og:description" content="Fale direto com sua unidade pelo WhatsApp. Entrega rápida em Barreiras.">
-<meta property="og:image" content="https://drogariamenorprecobarreiras.netlify.app/preview.jpg">
-<meta property="og:url" content="https://drogariamenorprecobarreiras.netlify.app/">
-<meta property="og:type" content="website">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    :root {
+      --vermelho: #e30613;
+      --vermelho-escuro: #b8000a;
+      --preto: #181818;
+      --cinza: #f3f3f3;
+      --cinza-texto: #666;
+      --branco: #ffffff;
+      --verde: #25d366;
+      --verde-escuro: #19aa50;
+      --amarelo: #ffb800;
+    }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--preto);
+      min-height: 100vh;
+      background: #111;
+      overflow-x: hidden;
+    }
+
+    /* =========================
+       FUNDO COM FOTOS EM LOOP
+    ========================== */
+
+    .background {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -2;
+      background: #151515;
+    }
+
+    .background img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: opacity 1.2s ease-in-out;
+      will-change: opacity, transform;
+    }
+
+    .background img.active {
+      opacity: 1;
+      animation: zoomFundo 6s linear forwards;
+    }
+
+    @keyframes zoomFundo {
+      from {
+        transform: scale(1.06);
+      }
+
+      to {
+        transform: scale(1);
+      }
+    }
+
+    /* Camada escura: melhora a leitura da logo, mascote e textos */
+    .background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.48) 0%,
+          rgba(90,0,0,.34) 42%,
+          rgba(0,0,0,.66) 100%
+        );
+    }
+
+    /* =========================
+       CONTEÚDO
+    ========================== */
+
+    .pagina {
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 32px 15px 48px;
+    }
+
+    /* =========================
+       TOPO
+    ========================== */
+
+    .topo {
+      text-align: center;
+      color: white;
+      padding: 8px 10px 28px;
+    }
+
+    .logo-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 95%;
+      padding: 12px 20px;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,.95);
+      border: 1px solid rgba(255,255,255,.88);
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      display: block;
+      width: 260px;
+      max-width: 100%;
+      height: auto;
+      margin: 0;
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,.16));
+    }
+
+    .mascote {
+      width: 185px;
+      max-width: 55%;
+      height: auto;
+      margin: 2px auto 12px;
+      display: block;
+      filter: drop-shadow(0 12px 18px rgba(0,0,0,.38));
+      transition: transform .25s ease;
+    }
+
+    .mascote:hover {
+      transform: translateY(-3px) scale(1.02);
+    }
+
+    .topo h1 {
+      font-size: 29px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      text-shadow: 0 3px 10px rgba(0,0,0,.55);
+    }
+
+    .topo p {
+      font-size: 16px;
+      opacity: .98;
+      line-height: 1.45;
+      text-shadow: 0 2px 8px rgba(0,0,0,.55);
+    }
+
+    /* =========================
+       CARD PRINCIPAL
+    ========================== */
+
+    .card {
+      position: relative;
+      background: rgba(255,255,255,.97);
+      border: 1px solid rgba(255,255,255,.85);
+      border-radius: 28px;
+      padding: 26px 18px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.30);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(
+        90deg,
+        var(--vermelho-escuro),
+        #ff2731,
+        var(--vermelho-escuro)
+      );
+    }
+
+    .chamada {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .chamada h2 {
+      color: var(--vermelho);
+      font-size: 24px;
+      margin-bottom: 7px;
+    }
+
+    .chamada p {
+      color: var(--cinza-texto);
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    /* =========================
+       TÍTULOS
+    ========================== */
+
+    .titulo-secao {
+      font-size: 18px;
+      margin: 28px 0 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* =========================
+       BOTÕES
+    ========================== */
+
+    .botoes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .botao {
+      width: 100%;
+      min-height: 64px;
+      border-radius: 17px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 12px 15px;
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease,
+        background .2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,.12);
+    }
+
+    .botao:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 9px 22px rgba(0,0,0,.19);
+      filter: brightness(1.02);
+    }
+
+    .botao:active {
+      transform: scale(.985);
+    }
+
+    .icone {
+      width: 45px;
+      height: 45px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,.20);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 23px;
+      margin-right: 13px;
+    }
+
+    .texto-botao {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      text-align: left;
+    }
+
+    .texto-botao strong {
+      font-size: 16px;
+    }
+
+    .texto-botao span {
+      font-size: 13px;
+      opacity: .9;
+      font-weight: 400;
+    }
+
+    /* WhatsApp */
+
+    .whatsapp {
+      background: linear-gradient(
+        135deg,
+        var(--verde),
+        var(--verde-escuro)
+      );
+    }
+
+    /* Grupo */
+
+    .grupo {
+      background: linear-gradient(
+        135deg,
+        #ffbd16,
+        #f28c00
+      );
+      color: #201600;
+    }
+
+    .grupo .icone {
+      background: rgba(255,255,255,.35);
+    }
+
+    /* Localizações */
+
+    .localizacao {
+      background: linear-gradient(135deg, #f4f4f4, #e5e5e5);
+      color: var(--preto);
+      box-shadow: 0 4px 12px rgba(0,0,0,.07);
+      border: 1px solid #dfdfdf;
+    }
+
+    .localizacao:hover {
+      background: linear-gradient(135deg, #ededed, #dcdcdc);
+    }
+
+    .localizacao .icone {
+      background: #ffffff;
+    }
+
+    /* =========================
+       DESTAQUE OFERTAS
+    ========================== */
+
+    .ofertas {
+      margin-top: 28px;
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--vermelho),
+          #9f0007
+        );
+      color: white;
+      padding: 22px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 22px rgba(170,0,0,.18);
+    }
+
+    .ofertas::after {
+      content: "❤";
+      position: absolute;
+      right: -20px;
+      bottom: -35px;
+      font-size: 120px;
+      opacity: .10;
+    }
+
+    .ofertas h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ofertas p {
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: .95;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* =========================
+       RODAPÉ
+    ========================== */
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 30px;
+    }
+
+    footer strong {
+      color: var(--vermelho);
+    }
+
+    /* =========================
+       RESPONSIVIDADE
+    ========================== */
+
+    @media (max-width: 400px) {
+      .pagina {
+        padding: 18px 10px 36px;
+      }
+
+      .topo {
+        padding-bottom: 22px;
+      }
+
+      .logo-box {
+        padding: 10px 15px;
+        border-radius: 18px;
+      }
+
+      .logo {
+        width: 215px;
+      }
+
+      .mascote {
+        width: 155px;
+      }
+
+      .topo h1 {
+        font-size: 25px;
+      }
+
+      .topo p {
+        font-size: 15px;
+      }
+
+      .card {
+        padding-left: 14px;
+        padding-right: 14px;
+        border-radius: 24px;
+      }
+
+      .botao {
+        min-height: 60px;
+      }
+
+      .texto-botao strong {
+        font-size: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .background img {
+        transition: none;
+        animation: none !important;
+      }
+
+      .background img:not(.active) {
+        display: none;
+      }
+
+      .botao,
+      .mascote {
+        transition: none;
+      }
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-<div class="background">
+  <!-- ======================================
+       FUNDO: FOTOS DAS LOJAS EM LOOP
+       Coloque as fotos na pasta assets com
+       estes nomes: loja1.jpg, loja2.jpg,
+       loja3.jpg e loja4.jpg
+  ======================================= -->
 
-<img src="bg1.jpg" class="bg">
-<img src="bg2.jpg" class="bg">
-<img src="bg3.jpg" class="bg">
-
-</div>
-
-<div class="container">
-
-<img src="logo.png" alt="Drogaria Menor Preço" class="logo">
-
-<h1 class="titulo">Drogaria Menor Preço</h1>
-
-<p class="subtitulo">
-Atendimento rápido em Barreiras<br>
-Clique abaixo e fale com sua unidade:
-</p>
-
-<a class="btn whatsapp"
-href="https://wa.me/5577981316960?text=Olá,%20vim%20pelo%20*Instagram*%0AGostaria%20de%20fazer%20meu%20pedido%20na%20*Drogaria%20Menor%20Preço*%20Vila%20Amorim">
-WhatsApp Loja 1 – Vila Amorim
-</a>
-
-<a class="btn whatsapp"
-href="https://wa.me/5577998048128?text=Olá,%20vim%20pelo%20*Instagram*%0AGostaria%20de%20fazer%20meu%20pedido%20na%20*Drogaria%20Menor%20Preço*%20Barreirinhas">
-WhatsApp Loja 2 – Barreirinhas
-</a>
-
-<a class="btn whatsapp"
-href="https://wa.me/5577998637841?text=Olá,%20vim%20pelo%20*Instagram*%0AGostaria%20de%20fazer%20meu%20pedido%20na%20*Drogaria%20Menor%20Preço*%20Santa%20Luzia">
-WhatsApp Loja 3 – Santa Luzia
-</a>
-
-<a class="btn ofertas"
-href="https://chat.whatsapp.com/CY79st8A29D8CwBrPtoPmE">
-🔥 Grupo de Ofertas e Promoções
-</a>
+  <div class="background" aria-hidden="true">
+    <img src="assets/loja1.jpg" alt="" class="active">
+    <img src="assets/loja2.jpg" alt="">
+    <img src="assets/loja3.jpg" alt="">
+    <img src="assets/loja4.jpg" alt="">
+  </div>
 
 
-<a class="btn endereco"
-href="https://maps.app.goo.gl/ATJ4BYHn3jyCm1QG9">
-📍 Ver endereço Loja 1
-</a>
+  <main class="pagina">
+
+    <!-- ========================
+         TOPO
+    ========================= -->
+
+    <header class="topo">
+
+      <!--
+        Coloque sua logo dentro da pasta:
+        assets/logo.png
+      -->
+
+      <div class="logo-box">
+        <img
+          src="assets/logo.png"
+          alt="Drogaria Menor Preço"
+          class="logo"
+        >
+      </div>
+
+      <!--
+        Coloque o mascote dentro da pasta:
+        assets/mascote.png
+      -->
+
+      <img
+        src="assets/mascote.png"
+        alt="Mascote Drogaria Menor Preço"
+        class="mascote"
+      >
+
+      <h1>Preço baixo todo dia!</h1>
+
+      <p>
+        Saúde, economia e atendimento pertinho de você.
+      </p>
+
+    </header>
 
 
-<a class="btn endereco"
-href="https://maps.app.goo.gl/m3zCyF2FqvLzHNfi8">
-📍 Ver endereço Loja 2
-</a>
+    <!-- ========================
+         CARD
+    ========================= -->
+
+    <section class="card">
+
+      <div class="chamada">
+
+        <h2>Como podemos ajudar?</h2>
+
+        <p>
+          Escolha sua unidade e fale diretamente
+          com nossa equipe pelo WhatsApp.
+        </p>
+
+      </div>
 
 
-<a class="btn endereco"
-href="https://maps.app.goo.gl/ygukY41MMMUecnYP9">
-📍 Ver endereço Loja 3
-</a>
+      <!-- ========================
+           WHATSAPP
+      ========================= -->
 
-<div class="rodape">
+      <div class="titulo-secao">
+        💬 Fale com nossas lojas
+      </div>
 
-© 2026 Drogaria Menor Preço<br>
-Barreiras - Bahia
+      <div class="botoes">
 
-</div>
+        <!-- LOJA 1 -->
 
-</div>
+        <a
+          href="https://wa.me/5577981316960?text=Olá,%20vim%20pelo%20*Instagram*%0AGostaria%20de%20fazer%20meu%20pedido%20na%20*Drogaria%20Menor%20Preço*%20Vila%20Amorim"
+          target="_blank"
+          class="botao whatsapp"
+        >
 
-<script src="script.js"></script>
+          <div class="icone">
+            💬
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Loja 1 — Vila Amorim
+            </strong>
+
+            <span>
+              Falar pelo WhatsApp (77) 98131-6960
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- LOJA 2 -->
+
+        <a
+          href="https://wa.me/5577998048128?text=Olá,%20vim%20pelo%20*Instagram*%0AGostaria%20de%20fazer%20meu%20pedido%20na%20*Drogaria%20Menor%20Preço*%20Barreirinhas"
+          target="_blank"
+          class="botao whatsapp"
+        >
+
+          <div class="icone">
+            💬
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Loja 2 — Barreirinhas
+            </strong>
+
+            <span>
+              Falar pelo WhatsApp (77) 99804-8128
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- LOJA 3 -->
+
+        <a
+          href="https://wa.me/5577998637841?text=Olá,%20vim%20pelo%20*Instagram*%0AGostaria%20de%20fazer%20meu%20pedido%20na%20*Drogaria%20Menor%20Preço*%20Santa%20Luzia%20da%20*Rua%20da%20Feirinha*"
+          target="_blank"
+          class="botao whatsapp"
+        >
+
+          <div class="icone">
+            💬
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Loja 3 — Santa Luzia
+            </strong>
+
+            <span>
+              Falar pelo WhatsApp (77) 99863-7841
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- LOJA 4 -->
+
+        <a
+          href="https://wa.me/5577981148721?text=Olá,%20vim%20pelo%20*Instagram*%0AGostaria%20de%20fazer%20meu%20pedido%20na%20*Drogaria%20Menor%20Preço*%20Santa%20Luzia%20da%20*Avenida%20Castelo%20Branco*"
+          target="_blank"
+          class="botao whatsapp"
+        >
+
+          <div class="icone">
+            💬
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Loja 4 — Av. Castelo Branco
+            </strong>
+
+            <span>
+              Falar pelo WhatsApp (77) 98114-8721
+            </span>
+
+          </div>
+
+        </a>
+
+      </div>
+
+
+      <!-- ========================
+           GRUPO DE OFERTAS
+      ========================= -->
+
+      <div class="titulo-secao">
+        🔥 Ofertas
+      </div>
+
+      <div class="botoes">
+
+        <a
+          href="https://chat.whatsapp.com/CY79st8A29D8CwBrPtoPmE"
+          target="_blank"
+          class="botao grupo"
+        >
+
+          <div class="icone">
+            🔥
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Grupo de Ofertas e Promoções
+            </strong>
+
+            <span>
+              Entre e receba nossas promoções
+            </span>
+
+          </div>
+
+        </a>
+
+      </div>
+
+
+      <!-- ========================
+           LOCALIZAÇÕES
+      ========================= -->
+
+      <div class="titulo-secao">
+        📍 Nossas lojas
+      </div>
+
+      <div class="botoes">
+
+        <!-- LOCALIZAÇÃO 1 -->
+
+        <a
+          href="https://maps.app.goo.gl/ATJ4BYHn3jyCm1QG9"
+          target="_blank"
+          class="botao localizacao"
+        >
+
+          <div class="icone">
+            📍
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Vila Amorim — Loja 1
+            </strong>
+
+            <span>
+              Av. Barão do Rio Branco
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- LOCALIZAÇÃO 2 -->
+
+        <a
+          href="https://maps.app.goo.gl/m3zCyF2FqvLzHNfi8"
+          target="_blank"
+          class="botao localizacao"
+        >
+
+          <div class="icone">
+            📍
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Barreirinhas — Loja 2
+            </strong>
+
+            <span>
+              Rua Santa Custódia
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- LOCALIZAÇÃO 3 -->
+
+        <a
+          href="https://maps.app.goo.gl/ygukY41MMMUecnYP9"
+          target="_blank"
+          class="botao localizacao"
+        >
+
+          <div class="icone">
+            📍
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Santa Luzia — Loja 3
+            </strong>
+
+            <span>
+              Rua da Feirinha
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <!-- LOCALIZAÇÃO 4 -->
+
+        <a
+          href="https://maps.app.goo.gl/LjL5xmh9SQBBu644A"
+          target="_blank"
+          class="botao localizacao"
+        >
+
+          <div class="icone">
+            📍
+          </div>
+
+          <div class="texto-botao">
+
+            <strong>
+              Av. Castelo Branco — Loja 4
+            </strong>
+
+            <span>
+              Av. Castelo Branco
+            </span>
+
+          </div>
+
+        </a>
+
+      </div>
+
+
+      <!-- ========================
+           DESTAQUE
+      ========================= -->
+
+      <div class="ofertas">
+
+        <h3>
+          ❤️ Aqui tem preço baixo!
+        </h3>
+
+        <p>
+          Acompanhe nossas ofertas e fale com a
+          unidade mais próxima de você.
+        </p>
+
+      </div>
+
+
+      <!-- ========================
+           RODAPÉ
+      ========================= -->
+
+      <footer>
+
+        <strong>
+          Drogaria Menor Preço
+        </strong>
+
+        <br>
+
+        Barreiras - Bahia
+
+        <br><br>
+
+        © 2026 Drogaria Menor Preço
+
+      </footer>
+
+    </section>
+
+  </main>
+
+
+  <!-- ======================================
+       SLIDESHOW DAS FOTOS DAS LOJAS
+  ======================================= -->
+
+  <script>
+    const fotosFundo = document.querySelectorAll('.background img');
+    let fotoAtual = 0;
+
+    function trocarFotoFundo() {
+      if (fotosFundo.length <= 1) return;
+
+      fotosFundo[fotoAtual].classList.remove('active');
+
+      fotoAtual = (fotoAtual + 1) % fotosFundo.length;
+
+      fotosFundo[fotoAtual].classList.add('active');
+    }
+
+    setInterval(trocarFotoFundo, 5000);
+  </script>
 
 </body>
-
 </html>
-
